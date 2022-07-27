@@ -5,7 +5,6 @@
 
 #include "BlasterCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/PawnMovementComponent.h"
 
 void UBlasterAnimInstance::NativeInitializeAnimation()
 {
