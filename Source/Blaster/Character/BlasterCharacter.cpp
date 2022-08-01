@@ -42,6 +42,7 @@ ABlasterCharacter::ABlasterCharacter()
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 850.f, 0);
 
 	TurningInPlace = ETurningInPlace::ETIP_NotTurning;
 	NetUpdateFrequency = 66.f;
@@ -52,6 +53,11 @@ ABlasterCharacter::ABlasterCharacter()
 void ABlasterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ABlasterCharacter::Jump()
+{
+	bIsCrouched ? UnCrouch() : Super::Jump();
 }
 
 void ABlasterCharacter::Tick(float DeltaTime)
@@ -69,7 +75,7 @@ void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis("LookUp", this, &ThisClass::LookUp);
 	PlayerInputComponent->BindAxis("Turn", this, &ThisClass::Turn);
 
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ABlasterCharacter::Jump);
 
 	PlayerInputComponent->BindAction("Equip", IE_Released, this, &ABlasterCharacter::EquipButtonPressed);
 	PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &ABlasterCharacter::CrouchButtonPressed);
