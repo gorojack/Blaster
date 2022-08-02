@@ -36,6 +36,8 @@ protected:
 	void AimButtonPressed();
 	void AimButtonReleased();
 	void AimOffset(float DeltaTime);
+	void FireButtonPressed();
+	void FireButtonReleased();
 
 private:
 	UPROPERTY(VisibleAnywhere, Category=Camera)
@@ -66,6 +68,9 @@ private:
 
 	ETurningInPlace TurningInPlace;
 	void TurnInPlace(float DeltaTime);
+
+	UPROPERTY(EditAnywhere, Category=Combat)
+	class UAnimMontage* FireWeaponMontage;
 public:
 	void SetOverlappingWeapon(AWeapon* Weapon);
 	bool IsWeaponEquipped();
@@ -74,4 +79,5 @@ public:
 	FORCEINLINE float GetAO_Pitch() const { return AO_Pitch; }
 	AWeapon* GetEquippedWeapon();
 	FORCEINLINE ETurningInPlace GetTurningInPlace() const { return TurningInPlace; }
+	void PlayFireMontage(bool bAiming);
 };
