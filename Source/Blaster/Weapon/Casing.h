@@ -21,6 +21,8 @@ protected:
 	virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	                   FVector NormalImpulse, const FHitResult& Hit);
 
+	void DelayToDestroy();
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* CasingMesh;
@@ -30,4 +32,8 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	class USoundCue* ShellSound;
+
+	FTimerHandle TimerHandle;
+
+	bool bAlreadyHit;
 };

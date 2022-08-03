@@ -31,9 +31,17 @@ void ACasing::BeginPlay()
 void ACasing::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                     FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (ShellSound)
+	if (ShellSound && !bAlreadyHit)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, ShellSound, GetActorLocation());
 	}
+	bAlreadyHit = true;
+	// Delay 3 seconds to destroy bullet casings
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ACasing::DelayToDestroy, 3.f, false);
+}
+
+void ACasing::DelayToDestroy()
+{
 	Destroy();
+	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 }
