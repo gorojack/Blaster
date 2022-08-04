@@ -306,3 +306,9 @@ void ABlasterCharacter::PlayFireMontage(bool bAiming)
 		AnimInstance->Montage_JumpToSection(SectionName);
 	}
 }
+
+FVector ABlasterCharacter::GetHitTarget() const
+{
+	if (CombatComponent == nullptr) return FVector();
+	return CombatComponent->HitTarget;
+}
