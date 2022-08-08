@@ -27,6 +27,8 @@ public:
 
 	virtual void OnRep_ReplicatedMovement() override;
 
+	virtual void Destroyed() override;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Jump() override;
@@ -146,6 +148,19 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Elim)
 	UMaterialInstance* DissolveMaterialInstance;
+
+	/*
+	 * Elim bot
+	 */
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* ElimBotEffect;
+
+	UPROPERTY(VisibleAnywhere)
+	UParticleSystemComponent* ElimBotComponent;
+
+	UPROPERTY(EditAnywhere)
+	class USoundCue* ElimBotSound;
 public:
 	void SetOverlappingWeapon(AWeapon* Weapon);
 	bool IsWeaponEquipped();
