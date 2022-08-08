@@ -178,4 +178,6 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastElim();
 	FORCEINLINE bool IsElimmed() const { return bElimmed; }
+	FORCEINLINE float GetHealth() const { return Health; }
+	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 };
