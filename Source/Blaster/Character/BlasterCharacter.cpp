@@ -625,9 +625,10 @@ void ABlasterCharacter::MulticastElim_Implementation()
 	StartDissolve();
 
 	// Disable character movement
-	// GetCharacterMovement()->DisableMovement();
-	// GetCharacterMovement()->StopMovementImmediately();
 	bDisableGameplay = true;
+	GetCharacterMovement()->DisableMovement();
+	// GetCharacterMovement()->StopMovementImmediately();
+
 	if (CombatComponent)
 	{
 		CombatComponent->FireButtonPressed(false);
