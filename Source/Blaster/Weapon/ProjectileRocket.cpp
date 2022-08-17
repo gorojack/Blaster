@@ -7,6 +7,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Components/BoxComponent.h"
 #include "NiagaraComponent.h"
+#include "RocketMovementComponent.h"
 #include "Components/AudioComponent.h"
 #include "Sound/SoundCue.h"
 
@@ -15,6 +16,11 @@ AProjectileRocket::AProjectileRocket()
 	RocketMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Rocket Mesh"));
 	RocketMeshComponent->SetupAttachment(RootComponent);
 	RocketMeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	RocketMovementComponent = CreateDefaultSubobject<URocketMovementComponent>(
+		TEXT("RocketMovementComponent"));
+	RocketMovementComponent->bRotationFollowsVelocity = true;
+	RocketMovementComponent->SetIsReplicated(true);
 }
 
 void AProjectileRocket::Destroyed()
@@ -60,6 +66,10 @@ void AProjectileRocket::DestroyTimerFinished()
 void AProjectileRocket::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                               FVector NormalImpulse, const FHitResult& Hit)
 {
+	if (OtherActor == GetOwner())
+	{
+		return;
+	}
 	APawn* FiringPawn = GetInstigator();
 	if (FiringPawn && HasAuthority())
 	{
