@@ -664,4 +664,15 @@ void ABlasterCharacter::MulticastElim_Implementation()
 	{
 		UGameplayStatics::SpawnSoundAtLocation(this, ElimBotSound, GetActorLocation());
 	}
+
+	bool bHidSniperScope =
+		IsLocallyControlled() &&
+		CombatComponent &&
+		CombatComponent->bAiming &&
+		CombatComponent->EquippedWeapon &&
+		CombatComponent->EquippedWeapon->GetWeaponType() == EWeaponType::EWT_SniperRifle;
+	if (bHidSniperScope)
+	{
+		ShowSniperScopeWidget(false);
+	}
 }
