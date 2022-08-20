@@ -55,6 +55,8 @@ protected:
 	void FireButtonPressed();
 	void FireButtonReleased();
 	void PlayHitReactMontage();
+	void GrenadeButtonPressed();
+	
 	UFUNCTION()
 	void ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType,
 	                   class AController* InstigatorController, AActor* DamageCauser);
@@ -108,6 +110,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category=Combat)
 	UAnimMontage* ReloadMontage;
+
+	UPROPERTY(EditAnywhere,Category=Combat)
+	UAnimMontage* ThrowGrenadeMontage;
 
 	void HideCameraIfCharacterClose();
 
@@ -194,6 +199,7 @@ public:
 	void PlayFireMontage(bool bAiming);
 	void PlayElimMontage();
 	void PlayReloadMontage();
+	void PlayThrowGrenadeMontage();
 	FVector GetHitTarget() const;
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	FORCEINLINE bool ShouldRotateRootBone() { return bRotateRootBone; }
