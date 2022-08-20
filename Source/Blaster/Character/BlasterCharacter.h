@@ -56,7 +56,7 @@ protected:
 	void FireButtonReleased();
 	void PlayHitReactMontage();
 	void GrenadeButtonPressed();
-	
+
 	UFUNCTION()
 	void ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType,
 	                   class AController* InstigatorController, AActor* DamageCauser);
@@ -111,7 +111,7 @@ private:
 	UPROPERTY(EditAnywhere, Category=Combat)
 	UAnimMontage* ReloadMontage;
 
-	UPROPERTY(EditAnywhere,Category=Combat)
+	UPROPERTY(EditAnywhere, Category=Combat)
 	UAnimMontage* ThrowGrenadeMontage;
 
 	void HideCameraIfCharacterClose();
@@ -188,6 +188,13 @@ private:
 
 	UPROPERTY()
 	class ABlasterPlayerState* BlasterPlayerState;
+
+	/*
+	 * Grenade
+	 */
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* AttachGrenade;
 public:
 	void SetOverlappingWeapon(AWeapon* Weapon);
 	bool IsWeaponEquipped();
