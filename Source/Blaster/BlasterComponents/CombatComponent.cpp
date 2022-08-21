@@ -7,6 +7,7 @@
 #include "Blaster/Character/BlasterCharacter.h"
 #include "Blaster/HUD/BlasterHUD.h"
 #include "Blaster/PlayerController/BlasterPlayerController.h"
+#include "Blaster/Weapon/Projectile.h"
 #include "Blaster/Weapon/Weapon.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
@@ -119,6 +120,24 @@ void UCombatComponent::ThrowGrenadeFinished()
 void UCombatComponent::LaunchGrenade()
 {
 	ShowAttachedGrenade(false);
+	if (Character && Character->HasAuthority() && GrenadeClass && Character->GetAttachedGrenade())
+	{
+		const FVector StartingLocation = Character->GetAttachedGrenade()->GetComponentLocation();
+		FVector ToTarget = HitTarget - StartingLocation;
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.Owner = Character;
+		SpawnParameters.Instigator = Character;
+		UWorld* World = GetWorld();
+		if (World)
+		{
+			World->SpawnActor<AProjectile>(
+				GrenadeClass,
+				StartingLocation,
+				ToTarget.Rotation(),
+				SpawnParameters
+			);
+		}
+	}
 }
 
 void UCombatComponent::TraceUnderCrosshairs(FHitResult& TraceHitResult)
@@ -572,7 +591,7 @@ int32 UCombatComponent::AmountToReload()
 
 void UCombatComponent::ThrowGrenade()
 {
-	if (CombatState != ECombatState::ECS_Unoccupied) return;
+	if (CombatState != ECombatState::ECS_Unoccupied || EquippedWeapon == nullptr) return;
 	CombatState = ECombatState::ECS_ThrowingGrenade;
 	if (Character)
 	{
