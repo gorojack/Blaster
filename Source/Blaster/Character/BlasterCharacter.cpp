@@ -99,6 +99,10 @@ void ABlasterCharacter::BeginPlay()
 	{
 		OnTakeAnyDamage.AddDynamic(this, &ABlasterCharacter::ReceiveDamage);
 	}
+	if (AttachGrenade)
+	{
+		AttachGrenade->SetVisibility(false);
+	}
 }
 
 void ABlasterCharacter::Jump()
